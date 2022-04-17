@@ -40,6 +40,11 @@ captures/
 *.iml
 .idea/workspace.xml
 .idea/tasks.xml
+.idea/sonarlint/**
+.idea/misc.xml
+.idea/compiler.xml
+.idea/deploymentTargetDropDown.xml
+.idea/saveactions_settings.xml
 .idea/gradle.xml
 .idea/assetWizardSettings.xml
 .idea/dictionaries
