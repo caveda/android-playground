@@ -12,4 +12,6 @@ dependencies {
     implementation project(path: ':domain')
     implementation(libs.bundles.retrofit.bundle)
     implementation(libs.coroutines)
+
+    implementation "javax.inject:javax.inject:1"
 }

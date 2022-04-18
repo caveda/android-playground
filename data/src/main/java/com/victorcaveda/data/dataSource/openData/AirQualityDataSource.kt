@@ -1,4 +1,6 @@
 package com.victorcaveda.data.dataSource
 
-class AirQualityDataSource {
+import javax.inject.Inject
+
+class AirQualityDataSource @Inject constructor() {
 }

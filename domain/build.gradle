@@ -10,4 +10,7 @@ java {
 
 dependencies {
     implementation(libs.coroutines)
+
+    // Hilt dependencies
+    implementation "javax.inject:javax.inject:1"
 }
