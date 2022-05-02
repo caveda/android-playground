@@ -1,8 +1,6 @@
 package com.victorcaveda.data.di
 
-import com.victorcaveda.data.dataSource.openData.WeatherDataService
-import com.victorcaveda.data.repository.AirQualityRepositoryImpl
-import com.victorcaveda.domain.repository.AirQualityRepository
+import com.victorcaveda.data.dataSource.openData.WeatherDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,13 +15,13 @@ import java.util.concurrent.TimeUnit
 @Module
 object DataModule {
     @Provides
-    fun provideRetrofit(): WeatherDataService =
+    fun provideRetrofit(): WeatherDataSource =
         Retrofit.Builder()
             .client(getOkHttpClient())
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WeatherDataService::class.java)
+            .create(WeatherDataSource::class.java)
 
     private fun getOkHttpClient() =
         OkHttpClient.Builder()
@@ -35,10 +33,6 @@ object DataModule {
             })
             .build()
 
-    @Provides
-    fun provideAirQualityRepository(): AirQualityRepository = AirQualityRepositoryImpl()
-
     const val NETWORK_REQUEST_TIMEOUT_SECONDS = 15L
     const val BASE_URL = "https://api.openweathermap.org/"
-
 }
