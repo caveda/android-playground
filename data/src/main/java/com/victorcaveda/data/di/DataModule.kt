@@ -3,17 +3,20 @@ package com.victorcaveda.data.di
 import com.victorcaveda.data.dataSource.openData.WeatherDataSource
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-@InstallIn(SingletonComponent::class)
 @Module
-object DataModule {
+class DataModule {
+
+    companion object {
+        const val NETWORK_REQUEST_TIMEOUT_SECONDS = 15L
+        const val BASE_URL = "https://api.openweathermap.org/"
+    }
+
     @Provides
     fun provideRetrofit(): WeatherDataSource =
         Retrofit.Builder()
@@ -32,7 +35,4 @@ object DataModule {
                 level = HttpLoggingInterceptor.Level.BODY
             })
             .build()
-
-    const val NETWORK_REQUEST_TIMEOUT_SECONDS = 15L
-    const val BASE_URL = "https://api.openweathermap.org/"
 }

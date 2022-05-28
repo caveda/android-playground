@@ -1,7 +1,10 @@
 package com.victorcaveda.playground
 
 import android.app.Application
-import dagger.hilt.android.HiltAndroidApp
+import com.victorcaveda.playground.di.DaggerApplicationComponent
 
-@HiltAndroidApp
-class PlaygroundApplication : Application()
+
+class PlaygroundApplication : Application() {
+
+    val appComponent = DaggerApplicationComponent.create()
+}
