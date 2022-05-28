@@ -29,15 +29,9 @@ dependencyResolutionManagement {
             version("coroutines", "1.6.1")
             alias("coroutines").to("org.jetbrains.kotlinx", "kotlinx-coroutines-core").versionRef("coroutines")
 
-            // Hilt dependencies
-            version("hilt", "2.41")
-            alias("hilt").to("com.google.dagger", "hilt-android").versionRef("hilt")
-            alias("hilt-kapt").to("com.google.dagger", "hilt-android-compiler").versionRef("hilt")
-        }
-
-        create("androidLibs") {
-            version("hilt", "1.0.0")
-            alias("hilt").to("androidx.hilt", "hilt-navigation-compose").versionRef("hilt")
+            // Dagger
+            version("dagger", "2.42")
+            alias("dagger").to("com.google.dagger", "dagger").versionRef("dagger")
         }
 
         create("testLibs") {
