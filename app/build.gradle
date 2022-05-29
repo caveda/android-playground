@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.coroutines)
 
     implementation(libs.dagger)
+    testImplementation 'junit:junit:4.12'
     kapt "com.google.dagger:dagger-compiler:$dagger_version"
 
     implementation "androidx.core:core-ktx:1.7.0"
@@ -70,10 +71,10 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_viewmodel_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$androidx_lifecycle_viewmodel_version"
 
-    // Testing
-    testImplementation "junit:junit:$junit4_version"
-    androidTestImplementation "androidx.test.ext:junit:$androidx_test_junit_version"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$androidx_test_espresso_version"
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_version"
+    // Tests
+    testImplementation(testLibs.bundles.unittest.bundle)
+    androidTestImplementation(testLibs.bundles.androidtest.bundle)
+
+    // Debug
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
 }
