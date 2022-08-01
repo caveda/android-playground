@@ -1,6 +1,6 @@
 package com.victorcaveda.data.di
 
-import com.victorcaveda.data.dataSource.openData.WeatherDataSource
+import com.victorcaveda.data.remote.openWeather.WeatherDataSource
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient

@@ -1,6 +1,6 @@
 package com.victorcaveda.data.repository
 
-import com.victorcaveda.data.dataSource.openData.WeatherDataSource
+import com.victorcaveda.data.remote.openWeather.WeatherDataSource
 import com.victorcaveda.domain.model.Station
 import com.victorcaveda.domain.repository.AirQualityRepository
 import javax.inject.Inject

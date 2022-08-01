@@ -1,8 +1,8 @@
 package com.victorcaveda.playground
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import com.victorcaveda.data.dataSource.openData.WeatherDataSource
 import com.victorcaveda.data.model.*
+import com.victorcaveda.data.remote.openWeather.WeatherDataSource
 import com.victorcaveda.data.repository.AirQualityRepositoryImpl
 import com.victorcaveda.domain.useCase.GetAirQualityDataUseCase
 import io.mockk.coEvery

@@ -3,33 +3,64 @@ package com.victorcaveda.data.model
 import com.google.gson.annotations.SerializedName
 
 data class WeatherDto(
-    @SerializedName("current")
-    val current: Current,
-    @SerializedName("daily")
-    val daily: List<Daily>
+    @SerializedName("elevation")
+    val elevation: Double,
+
+    @SerializedName("generationtime_ms")
+    val generationtimeMs: Double,
+
+    @SerializedName("hourly")
+    val data: WeatherData,
+
+    @SerializedName("hourly_units")
+    val hourlyUnits: HourlyUnits,
+
+    @SerializedName("latitude")
+    val latitude: Double,
+
+    @SerializedName("longitude")
+    val longitude: Double,
+
+    @SerializedName("utc_offset_seconds")
+    val utcOffsetSeconds: Int
 )
 
-data class Daily(
-    @SerializedName("temp")
-    val temp: Temp
+data class WeatherData(
+    @SerializedName("pressure_msl")
+    val pressures: List<Double>,
+
+    @SerializedName("relativehumidity_2m")
+    val humidities: List<Double>,
+
+    @SerializedName("temperature_2m")
+    val temperatures: List<Double>,
+
+    @SerializedName("time")
+    val time: List<String>,
+
+    @SerializedName("weathercode")
+    val codes: List<Double>,
+
+    @SerializedName("windspeed_10m")
+    val windspeeds: List<Double>
 )
 
-data class Temp(
-    @SerializedName("day")
-    val day: Double,
-    @SerializedName("eve")
-    val eve: Double,
-    @SerializedName("max")
-    val max: Double,
-    @SerializedName("min")
-    val min: Double,
-    @SerializedName("morn")
-    val morn: Double,
-    @SerializedName("night")
-    val night: Double
-)
+data class HourlyUnits(
+    @SerializedName("pressure_msl")
+    val pressure: String,
 
-data class Current(
-    @SerializedName("temp")
-    val temp: Double
+    @SerializedName("relativehumidity_2m")
+    val humidity: String,
+
+    @SerializedName("temperature_2m")
+    val temperature: String,
+
+    @SerializedName("time")
+    val time: String,
+
+    @SerializedName("weathercode")
+    val weatherCode: String,
+
+    @SerializedName("windspeed_10m")
+    val windspeed: String
 )

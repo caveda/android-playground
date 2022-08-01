@@ -1,4 +1,4 @@
-package com.victorcaveda.data.dataSource.openData
+package com.victorcaveda.data.remote.openWeather
 
 import com.victorcaveda.data.BuildConfig
 import com.victorcaveda.data.model.AirQualityDto
