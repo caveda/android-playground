@@ -18,12 +18,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.victorcaveda.playground.ui.theme.PlaygroundTheme
-import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var mainViewModel: MainViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        (application as? PlaygroundApplication)?.appComponent?.inject(this)
+
         setContent {
             PlaygroundTheme {
                 // A surface container using the 'background' color from the theme
@@ -31,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Stations()
+                    Stations(mainViewModel)
                 }
             }
         }
@@ -44,7 +50,9 @@ fun Stations(mainViewModel: MainViewModel = viewModel()) {
     Column(
     ) {
         with(mainViewModel.uiState.collectAsState().value) {
-            Listing(this.map { it.name })
+            this?.let {
+                Listing(forecast.values.map { it.toString() })
+            }
         }
     }
 }

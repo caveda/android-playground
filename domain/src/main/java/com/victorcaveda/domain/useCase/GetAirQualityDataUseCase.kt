@@ -4,7 +4,7 @@ import com.victorcaveda.domain.repository.AirQualityRepository
 import javax.inject.Inject
 
 class GetAirQualityDataUseCase @Inject constructor(
-    val airQualityRepository: AirQualityRepository
+    private val airQualityRepository: AirQualityRepository
 ) {
-    operator fun invoke() = airQualityRepository.getAirQualityData()
+    suspend operator fun invoke() = airQualityRepository.getAirQualityData()
 }

@@ -1,11 +1,17 @@
 package com.victorcaveda.data.repository
 
+import com.victorcaveda.data.remote.openWeather.OpenWeatherDataSource
 import com.victorcaveda.domain.model.Station
 import com.victorcaveda.domain.repository.AirQualityRepository
 import javax.inject.Inject
 
-class AirQualityRepositoryImpl @Inject constructor() : AirQualityRepository {
+class AirQualityRepositoryImpl @Inject constructor(val weatherService: OpenWeatherDataSource) :
+    AirQualityRepository {
 
-    override fun getAirQualityData(): List<Station> =
-        listOf(Station("Station 1"), Station("Station 2"), Station("Station 3"))
+    override suspend fun getAirQualityData(): List<Station> {
+        val airQuality = weatherService.getAirQuality(lat = "43.5452", lon = "-5.661920")
+        return listOf(
+            Station(airQuality.toString())
+        )
+    }
 }

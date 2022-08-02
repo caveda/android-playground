@@ -1,29 +1,41 @@
 package com.victorcaveda.data.di
 
-import com.victorcaveda.data.dataSource.openData.WeatherDataService
-import com.victorcaveda.data.repository.AirQualityRepositoryImpl
-import com.victorcaveda.domain.repository.AirQualityRepository
+import com.victorcaveda.data.remote.meteo.MeteoDataSource
+import com.victorcaveda.data.remote.openWeather.OpenWeatherDataSource
 import dagger.Module
 import dagger.Provides
-import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-@InstallIn(SingletonComponent::class)
 @Module
-object DataModule {
+class DataModule {
+
+    companion object {
+        const val NETWORK_REQUEST_TIMEOUT_SECONDS = 15L
+        const val OPENWEATHER_BASE_URL = "https://api.openweathermap.org/"
+        const val METEO_BASE_URL = "https://api.open-meteo.com/"
+    }
+
     @Provides
-    fun provideRetrofit(): WeatherDataService =
+    fun provideOpenWeatherDataSource(): OpenWeatherDataSource =
         Retrofit.Builder()
             .client(getOkHttpClient())
-            .baseUrl(BASE_URL)
+            .baseUrl(OPENWEATHER_BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(WeatherDataService::class.java)
+            .create(OpenWeatherDataSource::class.java)
+
+    @Provides
+    fun provideMeteoDataSource(): MeteoDataSource =
+        Retrofit.Builder()
+            .client(getOkHttpClient())
+            .baseUrl(METEO_BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(MeteoDataSource::class.java)
 
     private fun getOkHttpClient() =
         OkHttpClient.Builder()
@@ -34,11 +46,4 @@ object DataModule {
                 level = HttpLoggingInterceptor.Level.BODY
             })
             .build()
-
-    @Provides
-    fun provideAirQualityRepository(): AirQualityRepository = AirQualityRepositoryImpl()
-
-    const val NETWORK_REQUEST_TIMEOUT_SECONDS = 15L
-    const val BASE_URL = "https://api.openweathermap.org/"
-
 }
