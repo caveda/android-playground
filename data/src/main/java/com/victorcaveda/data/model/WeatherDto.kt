@@ -39,7 +39,7 @@ data class WeatherData(
     val time: List<String>,
 
     @SerializedName("weathercode")
-    val codes: List<Double>,
+    val codes: List<UInt>,
 
     @SerializedName("windspeed_10m")
     val windspeeds: List<Double>

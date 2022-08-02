@@ -2,7 +2,7 @@ package com.victorcaveda.playground
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.victorcaveda.data.model.*
-import com.victorcaveda.data.remote.openWeather.WeatherDataSource
+import com.victorcaveda.data.remote.openWeather.OpenWeatherDataSource
 import com.victorcaveda.data.repository.AirQualityRepositoryImpl
 import com.victorcaveda.domain.useCase.GetAirQualityDataUseCase
 import io.mockk.coEvery
@@ -20,7 +20,7 @@ class MainViewModelTest {
 
     lateinit var sut: MainViewModel
     lateinit var useCase: GetAirQualityDataUseCase
-    val weatherSource: WeatherDataSource = mockk()
+    val weatherSource: OpenWeatherDataSource = mockk()
 
     @Before
     fun setup() {

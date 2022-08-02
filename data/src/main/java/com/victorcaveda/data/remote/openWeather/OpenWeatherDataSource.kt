@@ -6,7 +6,7 @@ import com.victorcaveda.data.model.WeatherDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface WeatherDataSource {
+interface OpenWeatherDataSource {
 
     @GET("data/2.5/onecall?exclude=minutely,hourly,alerts&lang=en")
     suspend fun getWeather(
