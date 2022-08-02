@@ -19,7 +19,7 @@ data class WeatherInstant(
     val time: LocalDateTime,
     val temperature: Double,
     val pressure: Double,
-    val code: UInt,
+    val code: Int,
     val windspeed: Double,
     val humidity: Double
 )

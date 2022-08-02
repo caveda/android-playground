@@ -50,7 +50,9 @@ fun Stations(mainViewModel: MainViewModel = viewModel()) {
     Column(
     ) {
         with(mainViewModel.uiState.collectAsState().value) {
-            Listing(this.map { it.name })
+            this?.let {
+                Listing(forecast.values.map { it.toString() })
+            }
         }
     }
 }
