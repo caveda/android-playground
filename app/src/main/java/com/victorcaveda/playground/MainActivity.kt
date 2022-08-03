@@ -21,12 +21,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.victorcaveda.playground.model.WeatherState
 import com.victorcaveda.playground.ui.theme.PlaygroundTheme
+import com.victorcaveda.playground.ui.weather.WeatherViewModel
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: WeatherViewModel
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     companion object {
