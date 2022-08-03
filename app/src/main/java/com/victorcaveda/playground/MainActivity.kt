@@ -1,8 +1,11 @@
 package com.victorcaveda.playground
 
+import android.Manifest
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -25,6 +28,10 @@ class MainActivity : ComponentActivity() {
     @Inject
     lateinit var mainViewModel: MainViewModel
 
+    companion object {
+        val TAG = "MainActivity"
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -38,6 +45,26 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     Stations(mainViewModel)
+                }
+            }
+        }
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        val locationPermissionRequest = registerForActivityResult(
+            ActivityResultContracts.RequestMultiplePermissions()
+        ) { permissions ->
+            when {
+                permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
+                    Log.d(TAG, "Fine location permission granted")
+                }
+                permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
+                    Log.d(TAG, "Approximate location permission granted")
+                }
+                else -> {
+                    Log.d(TAG, "No location permission granted")
                 }
             }
         }
