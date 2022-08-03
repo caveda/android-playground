@@ -72,6 +72,9 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$androidx_lifecycle_viewmodel_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$androidx_lifecycle_viewmodel_version"
 
+    // Location
+    implementation "com.google.android.gms:play-services-location:$google_playservices_location_version"
+
     // Tests
     testImplementation(testLibs.bundles.unittest.bundle)
     androidTestImplementation(testLibs.bundles.androidtest.bundle)
