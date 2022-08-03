@@ -37,12 +37,19 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = data.weather.current.time.format(
-                        DateTimeFormatter.ofPattern("MMM dd, HH:mm")
-                    ),
-                    modifier = Modifier.align(Alignment.End),
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Text(
+                        text = "[${data.location.lat} , ${data.location.lon}]",
+                    )
+                    Text(
+                        text = data.weather.current.time.format(
+                            DateTimeFormatter.ofPattern("MMM dd, HH:mm")
+                        ),
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 Image(
                     painter = painterResource(id = WeatherUIType.fromDomain(data.weather.current.code).image),

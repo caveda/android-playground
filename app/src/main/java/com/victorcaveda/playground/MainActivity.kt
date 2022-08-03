@@ -8,10 +8,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,6 +19,7 @@ import com.victorcaveda.playground.ui.theme.DarkBlue
 import com.victorcaveda.playground.ui.theme.DeepBlue
 import com.victorcaveda.playground.ui.theme.PlaygroundTheme
 import com.victorcaveda.playground.ui.weather.WeatherCard
+import com.victorcaveda.playground.ui.weather.WeatherForecast
 import com.victorcaveda.playground.ui.weather.WeatherViewModel
 import javax.inject.Inject
 
@@ -90,21 +88,15 @@ fun Weather(state: WeatherState = WeatherState()) {
         with(state) {
             WeatherCard(state = state, backgroundColor = DeepBlue)
             Spacer(
-                modifier = Modifier.height(32.dp)
+                modifier = Modifier.height(16.dp)
             )
-            this.weatherData?.let {
-                Listing(mutableListOf(it.location.toString()) + it.weather.forecast.values.map { it.toString() })
+            this.weatherData?.let { data ->
+                WeatherForecast(
+                    forecast = data.weather.forecast,
+                    units = data.weather.units,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
-        }
-    }
-}
-
-
-@Composable
-private fun Listing(elements: List<String>) {
-    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
-        items(elements) { name ->
-            Text(name)
         }
     }
 }
