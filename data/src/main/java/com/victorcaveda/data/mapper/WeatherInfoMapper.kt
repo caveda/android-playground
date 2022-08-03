@@ -13,7 +13,7 @@ import java.time.format.DateTimeFormatter
 fun WeatherDto.toDomain(): WeatherInfo {
     val forecast = data.toDomain()
     val now = LocalDateTime.now()
-    val current = forecast.get(now.format(DateTimeFormatter.ISO_DATE_TIME))?.let { w ->
+    val current = forecast.get(now.format(DateTimeFormatter.ISO_LOCAL_DATE))?.let { w ->
         w.findLast {
             it.time < now
         }
