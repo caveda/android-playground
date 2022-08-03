@@ -1,37 +1,59 @@
 package com.victorcaveda.playground
 
-import android.util.Log
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.victorcaveda.domain.model.WeatherInfo
-import com.victorcaveda.domain.useCase.GetAirQualityDataUseCase
-import com.victorcaveda.domain.useCase.GetCurrentLocation
+import com.victorcaveda.domain.useCase.GetCurrentLocationUseCase
 import com.victorcaveda.domain.useCase.GetWeatherDataUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import com.victorcaveda.playground.model.WeatherScreenData
+import com.victorcaveda.playground.model.WeatherState
+import com.victorcaveda.playground.model.WeatherStateError
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
-    private val getAirQualityDataUseCase: GetAirQualityDataUseCase,
     private val getWeatherDataUseCase: GetWeatherDataUseCase,
-    private val getCurrentLocation: GetCurrentLocation
+    private val getCurrentLocationUseCase: GetCurrentLocationUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow<WeatherInfo?>(null)
-    val uiState: StateFlow<WeatherInfo?> = _uiState
+    var state by mutableStateOf(WeatherState())
+        private set
 
-    init {
-        loadData()
-    }
-
-    private fun loadData() {
+    fun loadWeatherData() {
         viewModelScope.launch {
-            val location = getCurrentLocation()
-            getWeatherDataUseCase(location.lat, location.lon).fold(
-                { weather -> _uiState.value = weather },
-                { error -> error.message?.let { Log.d("Weather", it) } }
+            state = state.copy(
+                isLoading = true,
+                error = null
             )
+
+            getCurrentLocationUseCase()?.let { location ->
+                getWeatherDataUseCase(location.lat, location.lon).fold(
+                    { weather ->
+                        state = state.copy(
+                            isLoading = false,
+                            error = null,
+                            weatherData = WeatherScreenData(weather, location)
+                        )
+                    },
+                    { error ->
+                        state = state.copy(
+                            isLoading = false,
+                            error = WeatherStateError.GenericError(
+                                error.message ?: "Unknown error"
+                            ),
+                            weatherData = null
+                        )
+                    }
+                )
+            } ?: kotlin.run {
+                state = state.copy(
+                    isLoading = false,
+                    error = WeatherStateError.LocationNotAvailableError,
+                    weatherData = null
+                )
+            }
         }
     }
 }

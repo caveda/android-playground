@@ -45,8 +45,8 @@ class MainViewModelTest {
         sut = MainViewModel(useCase)
 
         // Assert
-        val state = sut.uiState.first()
-        Assert.assertTrue(sut.uiState.get)
+        val state = sut.weatherInfo.first()
+        Assert.assertTrue(sut.weatherInfo.get)
         Assert.assertTrue(true)
     }
 
