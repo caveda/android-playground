@@ -7,26 +7,26 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.*
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.victorcaveda.playground.model.WeatherState
+import com.victorcaveda.playground.ui.theme.DarkBlue
+import com.victorcaveda.playground.ui.theme.DeepBlue
 import com.victorcaveda.playground.ui.theme.PlaygroundTheme
+import com.victorcaveda.playground.ui.weather.WeatherCard
+import com.victorcaveda.playground.ui.weather.WeatherForecast
+import com.victorcaveda.playground.ui.weather.WeatherViewModel
 import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
     @Inject
-    lateinit var viewModel: MainViewModel
+    lateinit var viewModel: WeatherViewModel
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     companion object {
@@ -45,7 +45,8 @@ class MainActivity : ComponentActivity() {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
+                    color = DarkBlue,
+                    contentColor = Color.White
                 ) {
                     Weather(viewModel.state)
                 }
@@ -85,19 +86,17 @@ fun Weather(state: WeatherState = WeatherState()) {
     Column(
     ) {
         with(state) {
-            this.weatherData?.let {
-                Listing(mutableListOf(it.location.toString()) + it.weather.forecast.values.map { it.toString() })
+            WeatherCard(state = state, backgroundColor = DeepBlue)
+            Spacer(
+                modifier = Modifier.height(16.dp)
+            )
+            this.weatherData?.let { data ->
+                WeatherForecast(
+                    forecast = data.weather.forecast,
+                    units = data.weather.units,
+                    modifier = Modifier.fillMaxWidth()
+                )
             }
-        }
-    }
-}
-
-
-@Composable
-private fun Listing(elements: List<String>) {
-    LazyColumn(modifier = Modifier.padding(vertical = 4.dp)) {
-        items(elements) { name ->
-            Text(name)
         }
     }
 }

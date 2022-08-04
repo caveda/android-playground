@@ -5,6 +5,7 @@ import com.victorcaveda.data.model.*
 import com.victorcaveda.data.remote.openWeather.OpenWeatherDataSource
 import com.victorcaveda.data.repository.AirQualityRepositoryImpl
 import com.victorcaveda.domain.useCase.GetAirQualityDataUseCase
+import com.victorcaveda.playground.ui.weather.WeatherViewModel
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.flow.first
@@ -18,7 +19,7 @@ class MainViewModelTest {
     @get:Rule
     var instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    lateinit var sut: MainViewModel
+    lateinit var sut: WeatherViewModel
     lateinit var useCase: GetAirQualityDataUseCase
     val weatherSource: OpenWeatherDataSource = mockk()
 
@@ -42,7 +43,7 @@ class MainViewModelTest {
         } answers { AirQualityDto(firstArg(), secondArg()) }
 
         // Act
-        sut = MainViewModel(useCase)
+        sut = WeatherViewModel(useCase)
 
         // Assert
         val state = sut.weatherInfo.first()

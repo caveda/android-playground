@@ -1,4 +1,4 @@
-package com.victorcaveda.playground
+package com.victorcaveda.playground.ui.weather
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -13,7 +13,7 @@ import com.victorcaveda.playground.model.WeatherStateError
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class MainViewModel @Inject constructor(
+class WeatherViewModel @Inject constructor(
     private val getWeatherDataUseCase: GetWeatherDataUseCase,
     private val getCurrentLocationUseCase: GetCurrentLocationUseCase
 ) : ViewModel() {
