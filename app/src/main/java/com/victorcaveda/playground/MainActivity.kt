@@ -21,21 +21,23 @@ import com.victorcaveda.playground.ui.theme.PlaygroundTheme
 import com.victorcaveda.playground.ui.weather.WeatherCard
 import com.victorcaveda.playground.ui.weather.WeatherForecast
 import com.victorcaveda.playground.ui.weather.WeatherViewModel
+import com.victorcaveda.playground.utils.ActivityLogger
+import com.victorcaveda.playground.utils.ActivityLoggerImpl
 import javax.inject.Inject
 
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), ActivityLogger by ActivityLoggerImpl() {
 
     @Inject
     lateinit var viewModel: WeatherViewModel
     private lateinit var permissionLauncher: ActivityResultLauncher<Array<String>>
 
     companion object {
-        val TAG = "MainActivity"
+        val TAG = "WeatherActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        registerActivity(TAG, this)
         requestPermissionsAndLoadData()
 
         (application as? PlaygroundApplication)?.appComponent?.inject(this)

@@ -48,8 +48,13 @@ class LocationRepositoryImpl @Inject constructor(
                     }
                     return@suspendCancellableCoroutine
                 }
-                addOnSuccessListener {
-                    cont.resume(Location(it.latitude, it.longitude))
+                addOnSuccessListener { location ->
+                    cont.resume(
+                        if (location != null) Location(
+                            location.latitude,
+                            location.longitude
+                        ) else null
+                    )
                 }
                 addOnFailureListener {
                     cont.resume(null)
